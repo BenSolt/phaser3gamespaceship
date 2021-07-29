@@ -3,7 +3,7 @@ import Phaser from 'phaser'
 import BulletSpawner from './BulletSpawner'
 import ScoreLabel from '../ui/ScoreLabel';
 
-import BombSpawner from './BombSpawner';
+import FlappyWall from './FlappyWall';
 
 const GROUND_KEY = 'ground'
 const DUDE_KEY = 'dude'
@@ -42,19 +42,24 @@ export default class HelloWorldScene extends Phaser.Scene
 
     //// CREATE /////////////////////////////////////////////////////////////////////////////////
     create() {
+
         this.cameras.main.setBackgroundColor(0x1d1923)
         this.add.image(400, 300, 'sky')
 
         const platforms = this.createPlatforms()
+
+
        
         this.player = this.createPlayer()
         this.stars = this.createStars()
+        this.walls = this.createWalls()
+        // this.FlappyWall.spawn()
 
         this.scoreLabel = this.createScoreLabel(16, 16, 0)
 
     // BOMB SPAWNER
-        this.bombSpawner = new BombSpawner(this, BOMB_KEY)
-        const bombsGroup = this.bombSpawner.group
+        this.FlappyWall = new FlappyWall(this, BOMB_KEY)
+        const bombsGroup = this.FlappyWall.group
 
         this.physics.add.collider(bombsGroup, platforms)
         // this.physics.add.collider(this.player, bombsGroup, this.hitBomb, null, this)
@@ -116,14 +121,13 @@ export default class HelloWorldScene extends Phaser.Scene
             return
         }
         //SHOOT = spacebar is down
-        if (Phaser.Input.Keyboard.JustDown(this.cursors.space)) {
-            this.shootLaser();
-        }
+        // if (Phaser.Input.Keyboard.JustDown(this.cursors.space)) {
+        //     this.shootLaser();
+        // }
 
         if (this.cursors.left.isDown) {
             this.player.setVelocityX(-160)
             this.player.anims.play('left', true)
-
             this.bulletDirect = -300
         }
         else if (this.cursors.right.isDown) {
@@ -139,73 +143,25 @@ export default class HelloWorldScene extends Phaser.Scene
             this.player.anims.play('turn')
         }
 
-        if (this.cursors.up.isDown && this.player.body.touching.down) {
-            this.player.setVelocityY(-330)
+        if (this.cursors.up.isDown) {
+            this.player.setVelocityY(-130)
         }
     }
 
-    hitBomb(player, bomb) {
-        this.physics.pause()
 
-        player.setTint(0xff0000)
-
-        player.anims.play('turn')
-
-        this.gameOver = true
-    }
-
-    shootLaser() {
-        this.bulletSpawner.spawn(this.player.x, this.player.y, this.bulletDirect)
-    }
 
     createPlatforms() {
         const platforms = this.physics.add.staticGroup()
         
         //Ground floor
         platforms.create(400, 400, GROUND_KEY).setScale(2).refreshBody()
-        // platforms.create(400, 568, GROUND_KEY).setScale(2).refreshBody()
 
+        // PLATFORMS
         platforms.create(550, 300, GROUND_KEY).setScale(0.6).refreshBody()
         platforms.create(160, 260, GROUND_KEY).setScale(0.6).refreshBody()
 
-        platforms.create(100, 340, GROUND_KEY).setScale(0.6).refreshBody()
-
-        platforms.create(20, 190, GROUND_KEY).setScale(0.5).refreshBody()
-        platforms.create(660, 210, GROUND_KEY).setScale(0.5).refreshBody()
-        
-        platforms.create(220, 110, GROUND_KEY).setScale(0.5).refreshBody()
-
-        platforms.create(480, 130, GROUND_KEY).setScale(0.5).refreshBody()
-        platforms.create(760, 110, GROUND_KEY).setScale(0.5).refreshBody()
-
         return platforms
-    }
-
-
-    destroyBullet(player, star) {
-        star.disableBody(true, true)
-
-        if (this.stars.countActive(true) === 0) {
-            //  A new batch of stars to collect
-            this.stars.children.iterate((child) => {
-                child.enableBody(true, child.x, 0, true, true)
-            })
-        }
-    }
-
-    collectStar(player, star) {
-        star.disableBody(true, true)
-
-        // add # points when collect stars
-        this.scoreLabel.add(10)
-
-        if (this.stars.countActive(true) === 0) {
-            //  A new batch of stars to collect
-            this.stars.children.iterate((child) => {
-                child.enableBody(true, child.x, 0, true, true)
-            })
-        }
-        this.bombSpawner.spawn(player.x)
+        
     }
 
     createScoreLabel(x, y, score) {
@@ -232,4 +188,18 @@ export default class HelloWorldScene extends Phaser.Scene
 
         return stars
     }
+
+    createWalls() {
+        const stars = this.physics.add.group({
+            key: BOMB_KEY,
+            repeat: 11,
+            setXY: { x: 130, y: 0, stepX: 70 }
+            //this.setVelocityX(130)
+        })
+
+    
+
+        return stars
+    }
+
 }

@@ -1,7 +1,8 @@
 import Phaser from 'phaser'
 
 //import HelloWorldScene from './scenes/HelloWorldScene'
-import GameShip from './scenes/GameShip'
+import GameShip from './scenes/GameShip';
+import GameFlappy from './scenes/GameFlappy';
 
 const config = {
 	type: Phaser.AUTO,
@@ -10,10 +11,12 @@ const config = {
 	physics: {
 		default: 'arcade',
 		arcade: {
-			gravity: { y: 200 }
+			gravity: { y: 500 }
 		}
 	},
-	scene:[GameShip]
+
+	scene:[GameFlappy]
+	//scene:[GameShip]
 	// scene: [HelloWorldScene]
 }
 
