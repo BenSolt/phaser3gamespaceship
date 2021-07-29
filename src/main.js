@@ -15,8 +15,8 @@ const config = {
 		}
 	},
 
-	scene:[GameFlappy]
-	//scene:[GameShip]
+	// scene:[GameFlappy]
+	scene:[GameShip]
 	// scene: [HelloWorldScene]
 }
 
