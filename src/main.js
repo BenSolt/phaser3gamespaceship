@@ -2,7 +2,7 @@ import Phaser from 'phaser'
 
 //import HelloWorldScene from './scenes/HelloWorldScene'
 import GameShip from './scenes/GameShip';
-import GameFlappy from './scenes/GameFlappy';
+//import GameFlappy from './scenes/GameFlappy';
 
 const config = {
 	type: Phaser.AUTO,
