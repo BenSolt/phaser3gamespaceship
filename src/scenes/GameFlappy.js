@@ -69,17 +69,11 @@ export default class HelloWorldScene extends Phaser.Scene
         const bulletGroup = this.bulletSpawner.group
 
         this.physics.add.collider(this.player, platforms)
-
-    // BULLETS/////////////////////////
-        // this.physics.add.collider(bulletGroup, platforms)
-        this.physics.add.overlap(this.stars, bulletGroup, this.collectStar, null, this)
-        this.physics.add.overlap(platforms, bulletGroup, this.destroyBullet, null, this)
         
         // this.physics.add.collider(bombsGroup, bulletGroup, null, null, this)
 
     // STARS///////////////////////////////
         this.physics.add.collider(this.stars, platforms)
-        this.physics.add.overlap(this.player, this.stars, this.collectStar, null, this)
     
         this.cursors = this.input.keyboard.createCursorKeys()
     }
@@ -120,11 +114,7 @@ export default class HelloWorldScene extends Phaser.Scene
         if (this.gameOver) {
             return
         }
-        //SHOOT = spacebar is down
-        // if (Phaser.Input.Keyboard.JustDown(this.cursors.space)) {
-        //     this.shootLaser();
-        // }
-
+        
         if (this.cursors.left.isDown) {
             this.player.setVelocityX(-160)
             this.player.anims.play('left', true)
