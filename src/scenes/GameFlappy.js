@@ -184,7 +184,6 @@ export default class HelloWorldScene extends Phaser.Scene
             key: BOMB_KEY,
             repeat: 11,
             setXY: { x: 130, y: 0, stepX: 70 }
-            //this.setVelocityX(130)
         })
 
     
