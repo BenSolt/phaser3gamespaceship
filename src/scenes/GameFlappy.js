@@ -69,9 +69,7 @@ export default class HelloWorldScene extends Phaser.Scene
         const bulletGroup = this.bulletSpawner.group
 
         this.physics.add.collider(this.player, platforms)
-        
-        // this.physics.add.collider(bombsGroup, bulletGroup, null, null, this)
-
+ 
     // STARS///////////////////////////////
         this.physics.add.collider(this.stars, platforms)
     
@@ -84,7 +82,6 @@ export default class HelloWorldScene extends Phaser.Scene
         const player = this.physics.add.sprite(100, 300, DUDE_KEY)
         player.setBounce(0.2)
         player.setCollideWorldBounds(true)
-        // this.ship = this.add.image(centerX, bottom, DUDE_KEY)
         
         this.anims.create({
             key: 'left',
